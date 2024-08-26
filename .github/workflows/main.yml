@@ -60,15 +60,15 @@ jobs:
         working-directory: cloned-repo
 
       - name: Clean Dist Directory
-        run: rimraf dist
+        run: yarn rimraf dist
         working-directory: cloned-repo
 
       - name: Build Electron Package for mac x64
         if: ${{ env.ARCH == 'x64' }}
-        run: electron-builder build -m --x64 --config electron-builder/base.config.js
+        run: yarn electron-builder build -m --x64 --config electron-builder/base.config.js
         working-directory: cloned-repo
 
       - name: Build Electron Package for mac ARM64
         if: ${{ env.ARCH == 'arm64' }}
-        run: electron-builder build -m --arm64 --config electron-builder/base.config.js
+        run: yarn electron-builder build -m --arm64 --config electron-builder/base.config.js
         working-directory: cloned-repo
