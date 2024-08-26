@@ -52,7 +52,7 @@ jobs:
         working-directory: cloned-repo
 
       - name: Run Compile for Cloned Repo
-        run: yarn compile:mac
+        run: yarn compile:production
         working-directory: cloned-repo
 
       - name: Run Package for Cloned Repo
