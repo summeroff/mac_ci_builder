@@ -64,11 +64,11 @@ jobs:
         working-directory: cloned-repo
 
       - name: Build Electron Package for mac x64
-        if: ${{ env.ARCH == 'x64' }}
+        if: ${{ env.ARCH == 'mac' }}
         run: yarn electron-builder build -m --x64 --config electron-builder/base.config.js
         working-directory: cloned-repo
 
       - name: Build Electron Package for mac ARM64
-        if: ${{ env.ARCH == 'arm64' }}
+        if: ${{ env.ARCH == 'mac-arm64' }}
         run: yarn electron-builder build -m --arm64 --config electron-builder/base.config.js
         working-directory: cloned-repo
