@@ -35,8 +35,11 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Install Yarn
+      - name: Install Dependencies
         run: yarn install
+
+      - name: Shallow Clone Another Repository
+        run: git clone --depth 1 $REPO_URL cloned-repo
 
       - name: Enable Corepack
         run: corepack enable
@@ -44,15 +47,14 @@ jobs:
       - name: Install Correct Yarn Version
         run: corepack prepare yarn@3.1.1 --activate
 
-      - name: Shallow Clone Another Repository
-        run: git clone --depth 1 $REPO_URL cloned-repo
-
-      - name: Install Dependencies
+      - name: Run Install for Cloned Repo
         run: yarn install
         working-directory: cloned-repo
 
-      - name: Run Compile
-        run: yarn test-compile
+      - name: Run Compile for Cloned Repo
+        run: yarn compile:mac
+        working-directory: cloned-repo
 
-      - name: Run Package
-        run: yarn lint-package
+      - name: Run Package for Cloned Repo
+        run: yarn package:mac
+        working-directory: cloned-repo
