@@ -1,0 +1,10 @@
+{
+    "name": "ci-test-project",
+    "version": "1.0.0",
+    "scripts": {
+      "test-compile": "yarn --cwd cloned-repo compile:production",
+      "lint-package": "yarn --cwd cloned-repo yarn package"
+    },
+    "dependencies": {}
+  }
+  

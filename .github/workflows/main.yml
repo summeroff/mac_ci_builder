@@ -1,0 +1,36 @@
+name: CI Test Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - '**'
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-12, macos-13, macos-14]
+    env:
+      REPO_URL: https://github.com/stream-labs/desktop.git
+      SLOBS_NO_SIGN: true 
+      SLOBS_REPORT_TO_SENTRY: false
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v2
+      
+      - name: Shallow Clone Another Repository
+        run: git clone --depth 1 $REPO_URL cloned-repo
+
+      - name: Install Dependencies
+        run: yarn install
+        working-directory: cloned-repo
+
+      - name: Run Compile
+        run: yarn test-compile
+
+      - name: Run Package
+        run: yarn lint-package
