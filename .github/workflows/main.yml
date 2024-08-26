@@ -15,11 +15,11 @@ jobs:
         os: [macos-12, macos-13, macos-14]
         include:
           - os: macos-12
-            arch: x86_64
+            arch: mac
           - os: macos-13
-            arch: x86_64
+            arch: mac
           - os: macos-14
-            arch: arm64
+            arch: mac-arm64
     env:
       REPO_URL: https://github.com/stream-labs/desktop.git
       SLOBS_NO_SIGN: true 
@@ -55,6 +55,20 @@ jobs:
         run: yarn compile:production
         working-directory: cloned-repo
 
-      - name: Run Package for Cloned Repo
-        run: yarn package:mac
+      - name: Generate Agreement for mac
+        run: yarn generate-agreement:mac
+        working-directory: cloned-repo
+
+      - name: Clean Dist Directory
+        run: rimraf dist
+        working-directory: cloned-repo
+
+      - name: Build Electron Package for mac x64
+        if: ${{ env.ARCH == 'x64' }}
+        run: electron-builder build -m --x64 --config electron-builder/base.config.js
+        working-directory: cloned-repo
+
+      - name: Build Electron Package for mac ARM64
+        if: ${{ env.ARCH == 'arm64' }}
+        run: electron-builder build -m --arm64 --config electron-builder/base.config.js
         working-directory: cloned-repo
