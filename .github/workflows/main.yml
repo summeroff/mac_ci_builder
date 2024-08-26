@@ -39,7 +39,7 @@ jobs:
         run: yarn install
 
       - name: Shallow Clone Another Repository
-        run: git clone --depth 1 $REPO_URL cloned-repo
+        run: git clone --depth 1 --branch staging $REPO_URL cloned-repo
 
       - name: Enable Corepack
         run: corepack enable
